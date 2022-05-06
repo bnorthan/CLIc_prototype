@@ -2,14 +2,19 @@
 cmake_minimum_required(VERSION 3.20)
 
 # Set project name and version
-project(CLIc VERSION 0.5.3)
+project(CLIc VERSION 0.5.4)
 
 # Set environment variables
 include(${PROJECT_SOURCE_DIR}/cmake/SetEnv.cmake)
 
 # find required package
-find_package(OpenCL REQUIRED)
-find_package(Python COMPONENTS Interpreter Development REQUIRED)
+if(NOT OpenCL_FOUND)
+    find_package(OpenCL REQUIRED)
+endif()
+
+if(NOT Python_FOUND)
+    find_package(Python COMPONENTS Interpreter Development REQUIRED)
+endif()
 
 # Library sources
 add_subdirectory(${THIRDPARTY_DIR})

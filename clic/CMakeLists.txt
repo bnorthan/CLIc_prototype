@@ -11,7 +11,9 @@ configure_file(
 # fetch sources (.cpp) and public headers (.hpp)
 file(GLOB_RECURSE SOURCES_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp) 
 file(GLOB_RECURSE HEADERS_FILE ${CMAKE_CURRENT_SOURCE_DIR}/include/core/*.hpp)
-file(GLOB_RECURSE OPENCL_FILE ${THIRDPARTY_DIR}/opencl/*.h ${THIRDPARTY_DIR}/opencl/*.hpp)
+file(GLOB_RECURSE OPENCL_FILE_H ${OpenCL_HEADERS_DIR}/*.h)
+file(GLOB_RECURSE OPENCL_FILE_HPP ${OpenCL_CLHPP_DIR}/*.hpp)
+list(APPEND OPENCL_FILE ${OPENCL_FILE_H} ${OPENCL_FILE_HPP})
 
 # define library target
 add_library(${LIBRARY_NAME} ${SOURCES_FILES})
@@ -19,7 +21,7 @@ add_library(${LIBRARY_NAME} ${SOURCES_FILES})
 set_target_properties(${LIBRARY_NAME} PROPERTIES FOLDER ${LIBRARY_DIR})
 
 # Target links
-target_link_libraries(${LIBRARY_NAME} OpenCL::OpenCL)
+target_link_libraries(${LIBRARY_NAME} PUBLIC ${OpenCL_LIBRARIES})
 
 # Alias: -> Foo::foo alias of foo
 add_library(${PROJECT_NAME}::${LIBRARY_NAME} ALIAS ${LIBRARY_NAME})
