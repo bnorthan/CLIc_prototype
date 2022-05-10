@@ -12,6 +12,7 @@
 namespace cle
 {
 
+
 /**
  * Management of GPU ressources
  *
@@ -396,7 +397,7 @@ const Object GPU::Create(const std::array<size_t,3>& t_shape, const std::string 
     {
         throw std::runtime_error("");
     }
-    return Object(mem, t_shape, this->Template2DataType<Type>());
+    return Object(std::make_shared<GPU>(*this), mem, t_shape, this->Template2DataType<Type>());
 }
 
 template<class Type>
@@ -439,7 +440,7 @@ const Object GPU::Push(const std::vector<Type>& t_data, const std::array<size_t,
     {
         throw std::runtime_error("");
     }
-    return Object(mem, t_shape, this->Template2DataType<Type>());
+    return Object(std::make_shared<GPU>(*this), mem, t_shape, this->Template2DataType<Type>());
 }
 
 template<class Type>
