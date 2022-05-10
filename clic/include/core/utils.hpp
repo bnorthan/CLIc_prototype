@@ -9,6 +9,42 @@
 
 #include <math.h>
 
+
+namespace cle
+{
+
+/**
+ * @brief list all available device compatible with OpenCL 
+ *        on the system, and return their name in a vector.         
+ * 
+ * @return const std::vector<std::string> 
+ */
+const std::vector<std::string> ListAvailableDevices()
+{
+    std::vector<std::string> results;
+    std::vector<cl::Platform> platforms;
+    cl::Platform::get(&platforms);
+    if (!platforms.empty())
+    {
+        for (auto &p : platforms) 
+        {
+            std::vector<cl::Device> devices;
+            p.getDevices(CL_DEVICE_TYPE_ALL, &devices);
+            if (!platforms.empty())
+            {
+                for (auto &d : devices) 
+                {
+                    results.push_back(d.getInfo<CL_DEVICE_NAME>());
+                }
+            }
+        }
+    }
+    return results;
+} 
+
+};
+
+
 template<class type>
 bool IsDifferent(std::vector<type>& output, std::vector<type>& valid)
 {
