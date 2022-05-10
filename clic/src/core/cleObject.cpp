@@ -6,7 +6,7 @@
 namespace cle
 {
 
-Object::Object(const cl::Memory& t_object, const std::array<size_t,3>& t_shape, const DataType t_dtype): LightObject(), m_Ocl(t_object), m_dType(t_dtype), m_Shape(t_shape), m_Region(t_shape)
+Object::Object(const std::shared_ptr<GPU> t_gpu, const cl::Memory& t_object, const std::array<size_t,3>& t_shape, const DataType t_dtype): LightObject(), m_gpu(t_gpu), m_Ocl(t_object), m_dType(t_dtype), m_Shape(t_shape), m_Region(t_shape)
 {
     switch (this->m_Ocl.getInfo<CL_MEM_TYPE>())
     {

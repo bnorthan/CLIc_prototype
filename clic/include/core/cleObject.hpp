@@ -7,6 +7,11 @@
 namespace cle
 {
 
+// forward declaration fo GPU
+// ! not the cleanest but currently the only way.
+// ! alternative would require a full rework of the architecture.
+class GPU;
+
 /**
  * generic class defining object properties
  *
@@ -32,7 +37,7 @@ public:
      * @param t_shape data shape as an array of 3.
      * @param t_dtype data type of the image.
      */
-    Object(const cl::Memory& t_object, const std::array<size_t,3>& t_shape, const DataType t_dtype);
+    Object(const std::shared_ptr<GPU> t_gpu, const cl::Memory& t_object, const std::array<size_t,3>& t_shape, const DataType t_dtype);
 
     /**
      * @brief Default destructor.
@@ -165,6 +170,8 @@ public:
 
 protected:
 
+
+    std::shared_ptr<GPU> m_gpu;
     /// OpenCL memory object (buffer, image, etc.)
     cl::Memory m_Ocl;
     /// data type holder
