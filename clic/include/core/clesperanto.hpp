@@ -27,7 +27,9 @@ public:
     const cle::Object Push(const std::vector<T>& ={0}, const std::array<size_t,3>& ={1,1,1}, const std::string& ="buffer") const;
     template<class T =float>
     const std::vector<T> Pull(const cle::Object&) const;
-
+    template<class T =float>
+    const cle::Object Wrap(cl::Memory, const std::array<size_t,3>& ={1,1,1}, const std::string& ="buffer") const; 
+    
     std::shared_ptr<GPU> Ressources();
 
     void Absolute(Object&, Object&);
@@ -133,6 +135,14 @@ public:
     {
         return this->m_gpu->Pull<T>(t_object);
     }
+
+    template<class T>
+    const cle::Object Clesperanto::Wrap(cl::Memory mem, const std::array<size_t,3>& t_shape, const std::string& t_type) const
+    {
+        return Object(mem, t_shape, cle::Object::DataType::FLOAT);
+        //return Object(mem, t_shape, this->Template2DataType<Type>());
+    } 
+    
 
 } // namespace cle
 
